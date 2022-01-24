@@ -19,7 +19,8 @@ Develop a blog using Flask for learning purpose:
 ## Dependencies
 
 * Flask
-* SQLAlquemy
+* SQLAlchemy
+* FlaskLogin
 
 ## Usage
 

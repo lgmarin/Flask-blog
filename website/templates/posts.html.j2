@@ -1,0 +1,21 @@
+{% extends "base.html.j2" %}
+{% block title %}Posts{% endblock %}
+{% block content %}
+<br/>
+    <div id='posts'>
+        {% for post in posts %}
+            <div class='card'>
+                <div class="card-header">{{post.user.username}}</div>
+                <div class="card-body">
+                    <p class="card-text">{{post.text}}</p>
+                </div>
+                <div class="card-footer text-muted">Footer</div>
+            </div>
+        {% endfor %}
+    </div>
+    <br/>
+<div align='center'>
+    <a href="/create-post"><button type="button" class="btn btn-primary btn-lg">Create a Post</button></a>
+</div>
+<br/>
+{% endblock content %}
