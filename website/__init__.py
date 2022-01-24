@@ -33,6 +33,19 @@ def create_app():
     # Create DB
     create_database(app)
 
+
+    # Setup login manager
+    login_manager = LoginManager()
+    login_manager.login_view = "auth.login"
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(id):
+        """
+        Query information from db based on the user id
+        """
+        return User.query.get(int(id))
+        
     return app
 
 def create_database(app):

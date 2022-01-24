@@ -4,8 +4,8 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 from . import db
 from .models import User
-from flask_login import current_user
-from werkzeug.security import generate_password_hash
+from flask_login import current_user, login_user, logout_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 auth = Blueprint("auth", __name__)
@@ -47,7 +47,34 @@ def signup():
     return render_template('signup.html.j2', user=current_user)
 
 
-@auth.route("/login")
+# Login Route
+@auth.route("/login", methods = ['GET', 'POST'])
 def login():
-    return render_template('login.html.j2')
+    """ Login Route
+    """
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        
+        # Check if user exists, then check if the password matches
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                print("Logged in!")
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
+            else:
+                print("Incorrect password!")
 
+    return render_template('login.html.j2', user=current_user)
+
+# Logout Route
+@auth.route("/logout")
+@login_required
+def logout():
+    """
+    Login Route
+    Redirect the user to the url for views/home
+    """
+    logout_user()
+    return redirect(url_for("views.home"))
