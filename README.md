@@ -10,7 +10,7 @@ A simple Flask based Blog Web Application
 
 Develop a blog using Flask for learning purpose:
 
-* Work with a Web Application developed in Python
+* Work with Web Development in Python
 * Deevelopment of a full stack web application
 * Work with HTML and Bootstrap
 * Work with GIT
