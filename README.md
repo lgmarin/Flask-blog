@@ -1,6 +1,6 @@
 # Flask-blog
 
-## _Data Acquisition Software based in Arduino_
+## _Blog Web Application based in Flask_
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 
 A simple Flask based Blog Web Application
