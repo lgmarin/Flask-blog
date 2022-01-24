@@ -1,7 +1,7 @@
 """ Authentication Routes
     Everything related to User authentication and registration
 """
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, redirect, render_template, request, url_for, flash
 from . import db
 from .models import User
 from flask_login import current_user, login_user, logout_user, login_required
@@ -27,20 +27,20 @@ def signup():
         username_exists = User.query.filter_by(username=username).first()
 
         if email_exists:
-            print("This email is already in use!")
+            flash("This email is already in use!", category='error')
         elif username_exists:
-            print("This username is already in use!")
+            flash("This username is already in use!", category='error')
         elif len(username) < 4:
-            print("Username is too short, should have 4 or more characters!")
+            flash("Username is too short, should have 4 or more characters!", category='error')
         elif len(password1) < 6:
-            print("Password is too short, should have 6 or more characters!")
+            flash("Password is too short, should have 6 or more characters!", category='error')
         elif password1 != password2:
-            print('Passwords do not match!')
+            flash('Passwords do not match!', category='error')
         else:
             new_user = User(email=email, username=username, password = generate_password_hash(password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            print("User created successfully!")
+            flash("User created successfully!", category='success')
 
             return redirect(url_for('views.home'))
 
@@ -60,11 +60,11 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                print("Logged in!")
+                flash("Logged in!", category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
-                print("Incorrect password!")
+                flash("Incorrect password!", category='error')
 
     return render_template('login.html.j2', user=current_user)
 
