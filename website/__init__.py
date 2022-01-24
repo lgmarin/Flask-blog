@@ -19,12 +19,19 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
-    # Create DB
-    create_database(app)
-
-    # Load Views
+    # Load Views Routes
     from .views import views
     app.register_blueprint(views, url_prefix="/")
+
+    # Load Auth Routes
+    from .auth import auth
+    app.register_blueprint(auth, url_prefix="/")
+
+    # Load DB Models
+    from .models import User
+
+    # Create DB
+    create_database(app)
 
     return app
 
