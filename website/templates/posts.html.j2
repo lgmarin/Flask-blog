@@ -12,7 +12,26 @@
                             <a href="#" class="btn btn-primary" aria-current="page"># Like</a>
                             <a href="#" class="btn btn-primary">Coment</a>
                             {% if user.id == post.author %}
-                                <a href="/delete-post/{{post.id}}" class="btn btn-danger">Delete</a>
+                                <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</a>
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        This will delete the post and all of the comments permanently, are you sure?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button href="/delete-post/{{post.id}}" type="button" class="btn btn-danger">Understood</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <br/>                                
                             {% endif %}
                         </div>
                     </div>
@@ -41,5 +60,4 @@
 <div align='center'>
     <a href="/create-post"><button type="button" class="btn btn-primary btn-lg">Create a Post</button></a>
 </div>
-<br/>
 {% endblock content %}
