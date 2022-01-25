@@ -77,4 +77,4 @@ def logout():
     Redirect the user to the url for views/home
     """
     logout_user()
-    return redirect(url_for("views.home"))
+    return redirect(url_for('views.home'))

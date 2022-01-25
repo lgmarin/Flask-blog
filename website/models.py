@@ -9,12 +9,19 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique = True)
     username = db.Column(db.String(100), unique = True)
     password = db.Column(db.String(100))
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_created = db.Column(db.DateTime, default = datetime.utcnow)
     # Relationships based on the User Model
     posts = db.relationship('Post', backref="user", passive_deletes = True)
+    comments = db.relationship('Comment', backref="user", passive_deletes = True)
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     text = db.Column(db.Text, nullable = False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_created = db.Column(db.DateTime, default = datetime.utcnow)
+    author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable = False)
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    text = db.Column(db.Text, nullable = False)
+    date_created = db.Column(db.DateTime, default = datetime.utcnow)
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable = False)
