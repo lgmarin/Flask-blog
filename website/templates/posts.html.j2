@@ -8,18 +8,13 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <a href="">{{post.user.username}}</a>
                     <div>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                <li><a class="dropdown-item" href="#">Comment</a></li>
-                                {% if user.id == post.author %}
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="/delete-post/{{post.id}}">Delete Post</a></li>                               
-                                {% endif %}
-                            </ul>
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-primary" aria-current="page"># Like</a>
+                            <a href="#" class="btn btn-primary">Coment</a>
+                            {% if user.id == post.author %}
+                                <a href="/delete-post/{{post.id}}" class="btn btn-danger">Delete</a>
+                            {% endif %}
                         </div>
-
                     </div>
                 </div>
                 <div class="card-body">
@@ -36,7 +31,7 @@
                         </div>
                 </div>
                     <div class="card-footer text-muted align-items-right">
-                        Created in: {{post.date_created}}
+                        Created in: {{post.date_created.strftime("%m/%d/%Y, %H:%M:%S")}}
                     </div>
             </div>
             <br/>
