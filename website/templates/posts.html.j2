@@ -9,7 +9,7 @@
                     <a href="">{{post.user.username}}</a>
                     <div>
                         <div class="btn-group">
-                            <a href="#" class="btn btn-primary">Coment</a>
+                            <a href="/create-comment/{{post.id}}" class="btn btn-primary">Coment</a>
                             {% if user.id == post.author %}
                                 <a href="/delete-post/{{post.id}}" class="btn btn-danger">Delete</a>
                                 <br/>                                
@@ -20,13 +20,27 @@
                 <div class="card-body">
                     <div class="card-text"><p class="card-text">{{post.text}}</p></div>
                         <p>
-                            <a data-bs-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                View x Comments
-                            </a>
-                            </p>
-                            <div class="collapse" id="collapseExample">
+                        {% if post.comments|length %}
+                            <a data-bs-toggle="collapse" href="#comments-{{post.id}}" aria-expanded="false" aria-controls="colapse-comments-{{post.id}}"><small>View {{post.comments|length}} Comments</small></a>
+                        {% else %}
+                            <small class="text-mutted">No Comments</small>
+                        {% endif %}
+                        </p>
+                        <div class="collapse" id="comments-{{post.id}}">
                             <div class="card card-body">
-                                COMMENTS GOES HERE
+                                {% for comment in post.comments %}
+                                    <div class="d-flex justify-content-between aling-items-center">
+                                        <div>
+                                            <a>{{comment.user.username}}</a>: {{comment.text}}
+                                        </div>
+                                        <div>
+                                            <small class="text-mutted">{{comment.date_created.strftime("%m/%d/%Y, %H:%M:%S")}}</small>
+                                            {% if user.id == comment.author or user.id == post.author %}
+                                                <a href="/delete-comment/{{comment.id}}"><i class="far fa-trash-alt"></i></a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}                                
                             </div>
                         </div>
                 </div>

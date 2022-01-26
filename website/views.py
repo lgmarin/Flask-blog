@@ -76,3 +76,21 @@ def like_post(post_id):
         db.session.commit()
 
     return redirect(url_for('views.home'))
+
+# Create Comment Route
+@views.route("/create-comment/<post_id>", methods=['GET', 'POST'])
+@login_required
+def create_comment(post_id):
+
+    if request.method == 'POST':
+        text = request.form.get('text')
+        if not text:
+            flash("Your comment should not be empty!", category='error')
+        else:
+            comment = Comment(text=text, author=current_user.id, post_id=post_id)
+            db.session.add(comment)
+            db.session.commit()
+            return redirect(url_for('views.home'))
+            flash("Comment created!")
+
+    return render_template('create-comment.html.j2', user = current_user)
