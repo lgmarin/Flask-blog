@@ -1,6 +1,6 @@
-var myModal = document.getElementById('myModal')
-var myInput = document.getElementById('myInput')
+function like(postId) {
+    const likeCount = document.getElementById('likes-count-${postId}');
+    const likeButton = document.getElementById('like-button-${postId}');
 
-myModal.addEventListener('shown.bs.modal', function () {
-  myInput.focus()
-})
+    console.log(likeCount.value);
+}

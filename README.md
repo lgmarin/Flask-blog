@@ -5,6 +5,7 @@
 
 A simple Flask based Blog Web Application
 
+![Flask-blog](blog.png "Blog based in Flask")
 
 ## Objectives
 
