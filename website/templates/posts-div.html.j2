@@ -1,0 +1,70 @@
+{% extends "base.html.j2" %}
+{% block title %}Posts div{% endblock title %}
+{% block content %}
+<h1 align='center'>{% block header %}Posts{% endblock %}</h1>
+    <div id='posts'>
+        {% for post in posts %}
+            <div class='card'>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
+                    <div>
+                        <div class="btn-group">
+                            <a href="/create-comment/{{post.id}}" class="btn btn-primary">Coment</a>
+                            {% if user.id == post.author %}
+                                <a href="/delete-post/{{post.id}}" class="btn btn-danger">Delete</a>
+                                <br/>                                
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-text"><p class="card-text">{{post.text}}</p></div>
+                        <p>
+                        {% if post.comments|length %}
+                            <a data-bs-toggle="collapse" href="#comments-{{post.id}}" aria-expanded="false" aria-controls="colapse-comments-{{post.id}}"><small>View {{post.comments|length}} Comments</small></a>
+                        {% else %}
+                            <small class="text-mutted">No Comments</small>
+                        {% endif %}
+                        </p>
+                        <div class="collapse" id="comments-{{post.id}}">
+                            <div class="card card-body">
+                                {% for comment in post.comments %}
+                                    <div class="d-flex justify-content-between aling-items-center">
+                                        <div>
+                                            <a href="/posts/{{post.user.username}}">{{comment.user.username}}</a>: {{comment.text}}
+                                        </div>
+                                        <div>
+                                            <small class="text-mutted">{{comment.date_created.strftime("%m/%d/%Y, %H:%M:%S")}}</small>
+                                            {% if user.id == comment.author or user.id == post.author %}
+                                                <a href="/delete-comment/{{comment.id}}"><i class="far fa-trash-alt"></i></a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}                                
+                            </div>
+                        </div>
+                </div>
+                    <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+                        Created in: {{post.date_created.strftime("%m/%d/%Y, %H:%M:%S")}}
+                        <div>
+                            {{post.likes|length}}
+                            {% if user.id in post.likes|map(attribute="author")|list %}
+                                <a href="/like-post/{{post.id}}"> <i class="fas fa-thumbs-up" id="like-button-{{post.id}}"></i></a>
+                            {% else %}
+                                <a href="/like-post/{{post.id}}"> <i class="far fa-thumbs-up" id="like-button-{{post.id}}"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+            </div>
+            <br/>
+        {% endfor %}
+    </div>
+    <br/>
+{% endblock content %}
+
+{% block footer %}
+<div align='center'>
+    <a href="/create-post"><button type="button" class="btn btn-primary btn-lg">Create a Post</button></a>
+</div>
+<br/>
+{% endblock footer %}

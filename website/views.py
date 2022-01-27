@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, url_for, flash
 from flask_login import login_required, current_user
+from .models import User
 from .models import Post
 from .models import Comment
 from .models import Like
@@ -82,6 +83,18 @@ def like_post(post_id):
 
     return redirect(url_for('views.home'))
 
+# View User's Posts
+@views.route("/posts/<username>")
+@login_required
+def view_posts(username):
+
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        flash("User not found!", category='error')
+        return redirect(url_for('views.home'))
+    else:
+        return render_template("posts.html.j2", user=current_user, posts=user.posts, username=username)
 
 """ Comments related routes
 """
