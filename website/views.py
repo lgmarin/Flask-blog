@@ -1,3 +1,9 @@
+""" Views Blueprint
+    ---------------------------
+    Simple Flask Blog WebApp
+    Developped by: Luiz Marin
+"""
+
 from flask import Blueprint, redirect, render_template, request, url_for, flash
 from flask_login import login_required, current_user
 from .models import User
@@ -9,15 +15,17 @@ from . import db
 views = Blueprint("views", __name__)
 
 
-""" Define the main blueprints
-"""
-
-
 # Home Page Route
 @views.route("/")
 @views.route("/home")
 @login_required
 def home():
+    """ Home Page Route
+
+        Parameters  :   None
+
+        Redirect to :   Home Page
+    """
 
     posts = Post.query.all()
     return render_template('home.html.j2', user=current_user, posts=posts)
@@ -27,6 +35,14 @@ def home():
 @views.route("/create-post", methods=['GET', 'POST'])
 @login_required
 def create_post():
+    """ Create Post Route
+
+        Parameters  :   None
+        
+        Methods     :   GET, POST
+
+        Redirect to :   Main page when successfull
+    """
 
     if request.method == 'POST':
         text = request.form.get('text')
@@ -46,6 +62,14 @@ def create_post():
 @views.route("/delete-post/<id>")
 @login_required
 def delete_post(id):
+    """ Delete Post Route
+
+        Parameters  :   post id
+        
+        Methods     :   None
+
+        Redirect to :   Main page when successfull
+    """
 
     post = Post.query.filter_by(id=id).first()
 
@@ -65,7 +89,15 @@ def delete_post(id):
 @views.route("/like-post/<post_id>", methods=['GET'])
 @login_required
 def like_post(post_id):
-    
+    """ Like Post Route
+
+        Parameters  :   post id
+        
+        Methods     :   GET
+
+        Redirect to :   Main page when successfull
+    """
+
     post = Post.query.filter_by(id=post_id).first()
     like = Like.query.filter_by(author=current_user.id, post_id=post_id).first()
 
@@ -83,10 +115,19 @@ def like_post(post_id):
 
     return redirect(url_for('views.home'))
 
+
 # View User's Posts
 @views.route("/posts/<username>")
 @login_required
 def view_posts(username):
+    """ View User Posts Route
+
+        Parameters  :   username
+        
+        Methods     :   None
+
+        Redirect to :   Main page when successfull
+    """
 
     user = User.query.filter_by(username=username).first()
 
@@ -96,14 +137,19 @@ def view_posts(username):
     else:
         return render_template("posts.html.j2", user=current_user, posts=user.posts, username=username)
 
-""" Comments related routes
-"""
 
 # Create Comment Route
 @views.route("/create-comment/<post_id>", methods=['GET', 'POST'])
 @login_required
 def create_comment(post_id):
+    """ Create Comment Route
 
+        Parameters  :   post id
+        
+        Methods     :   GET, POST
+
+        Redirect to :   Main page when successfull
+    """
     if request.method == 'POST':
         text = request.form.get('text')
         if not text:
@@ -122,7 +168,14 @@ def create_comment(post_id):
 @views.route("/delete-comment/<id>")
 @login_required
 def delete_comment(id):
+    """ Delete Comment Route
 
+        Parameters  :   comment id
+        
+        Methods     :   None
+
+        Redirect to :   Main page when successfull
+    """
     comment = Comment.query.filter_by(id=id).first()
 
     if not comment:

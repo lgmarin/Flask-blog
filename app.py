@@ -1,5 +1,7 @@
 """ Simple Flask Blog WebApp
-    Developped by: Luiz Marin """
+    Developped by: Luiz Marin 
+"""
+    
 from website import create_app
 
 if __name__ == '__main__':

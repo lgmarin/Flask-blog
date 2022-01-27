@@ -1,3 +1,9 @@
+""" Flask WebApp Initialization
+    ---------------------------
+    Simple Flask Blog WebApp
+    Developped by: Luiz Marin 
+"""
+
 from flask import Flask
 from os import path
 from flask_sqlalchemy import SQLAlchemy

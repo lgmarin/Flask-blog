@@ -1,6 +1,9 @@
-""" Authentication Routes
-    Everything related to User authentication and registration
+""" Authentication Blueprint
+    ---------------------------
+    Simple Flask Blog WebApp
+    Developped by: Luiz Marin
 """
+
 from flask import Blueprint, redirect, render_template, request, url_for, flash
 from . import db
 from .models import User
@@ -10,12 +13,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint("auth", __name__)
 
-""" Authentication Blueprints
-"""
 
 @auth.route("/sign-up", methods=['GET', 'POST'])
 def signup():
     """ Sign-up Route
+
+        Parameters  :   None
+        
+        Methods     :   GET, POST
+
+        Redirect to :   Main page when successfull
     """
 
     if request.method  == 'POST':
@@ -48,10 +55,16 @@ def signup():
 
     return render_template('signup.html.j2', user=current_user)
 
-# Login Route
+
 @auth.route("/login", methods = ['GET', 'POST'])
 def login():
-    """ Login Route
+    """ Sign-up Route
+
+        Parameters  :   None
+        
+        Methods     :   GET, POST
+
+        Redirect to :   Main page when successfull
     """
     if request.method == 'POST':
         email = request.form.get('email')
@@ -69,13 +82,15 @@ def login():
 
     return render_template('login.html.j2', user=current_user)
 
-# Logout Route
+
 @auth.route("/logout")
 @login_required
 def logout():
-    """
-    Login Route
-    Redirect the user to the url for views/home
+    """ Sign-up Route
+
+        Parameters  :   None
+
+        Redirect to :   Main page
     """
     logout_user()
     return redirect(url_for('views.home'))
