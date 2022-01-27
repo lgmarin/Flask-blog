@@ -10,6 +10,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint("auth", __name__)
 
+""" Authentication Blueprints
+"""
 
 @auth.route("/sign-up", methods=['GET', 'POST'])
 def signup():
@@ -45,7 +47,6 @@ def signup():
             return redirect(url_for('views.home'))
 
     return render_template('signup.html.j2', user=current_user)
-
 
 # Login Route
 @auth.route("/login", methods = ['GET', 'POST'])
