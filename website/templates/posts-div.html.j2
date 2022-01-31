@@ -11,6 +11,7 @@
                         <div class="btn-group">
                             <a href="/create-comment/{{post.id}}" class="btn btn-primary">Coment</a>
                             {% if user.id == post.author %}
+                                <a href="/edit-post/{{post.id}}" class="btn btn-primary">Edit</a>
                                 <a href="/delete-post/{{post.id}}" class="btn btn-danger">Delete</a>
                                 <br/>                                
                             {% endif %}

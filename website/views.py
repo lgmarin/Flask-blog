@@ -84,6 +84,37 @@ def delete_post(id):
 
     return redirect(url_for('views.home'))
 
+#Edit Post Route
+@views.route("/edit-post/<id>", methods=['GET', 'POST'])
+@login_required
+def edit_post(id):
+    """ Edit Post Route
+
+        Parameters  :   post id
+        
+        Methods     :   GET, POST
+
+        Redirect to :   Main page when successfull
+    """
+
+    post = Post.query.filter_by(id=id).first()
+
+    if not post:
+        flash("Post does not exist!", category='error')
+    elif current_user.id != post.author:
+        flash("You don\'t have permission to edit this post!", category='error')
+    elif request.method == 'POST':
+        text = request.form.get('text')
+        if not text:
+            flash("Your post should not be empty!", category='error')
+        else:
+            post.text = text
+            db.session.commit()
+            flash("Post updated!", 'success')
+            return redirect(url_for('views.home'))
+
+    return render_template('edit-post.html.j2', user = current_user)
+
 
 # Like Post Route
 @views.route("/like-post/<post_id>", methods=['GET'])

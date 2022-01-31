@@ -28,13 +28,13 @@ Develop a blog using Flask for learning purpose:
 
 Prepare the virtual environment (Using Linux):
 
-    - python -m venv .venv
-    - source .venv/bin/activate
+    python -m venv .venv
+    source .venv/bin/activate
 
 Install all dependencies:
 
-    - pip install -r requirements.txt
+    pip install -r requirements.txt
 
 Run Flask server
 
-    - flask run
+    flask run

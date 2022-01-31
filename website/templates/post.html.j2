@@ -1,0 +1,20 @@
+{% extends "base.html.j2"%}
+{% block title %}{% endblock %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{% block submit_msg %}{% endblock %}</legend>
+                <div class="form-group">
+                    <textarea name="text" id="text" class="form-control"></textarea>
+                </div>
+            </fieldset>
+            <br>
+            <button type="submit" class="btn btn-primary">{% block submit_btn %}{% endblock %}</button>
+        </form>
+        <br>
+        <div align="center">
+            <a href="/home"><button type="button" class="btn btn-lg btn-secondary">Cancel</button></a>
+        </div>
+    </div>    
+{% endblock %}
