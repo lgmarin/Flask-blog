@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
             password        :   String
             date_created    :   DateTime
 
-        Relatiosnhips:
+        Relationhips:
 
             posts           :   Post Model
             comments        :   Comment Model
